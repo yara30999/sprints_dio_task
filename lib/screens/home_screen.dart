@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sprints_dio_task/models/employee.dart';
 import 'package:sprints_dio_task/screens/widgets/employee_card.dart';
 import 'package:sprints_dio_task/services/api_service.dart';
+import 'package:sprints_dio_task/services/shared_prefs.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -22,14 +23,12 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> getEmployeeData() async {
-    try {
-      final Future<List<Employee>> data = service.getEmployees();
-      setState(() {
-        employees = data;
-      });
-    } catch (e) {
-      debugPrint(e.toString());
-    }
+    employees = AppPreferences.loadCachedEmployees().then((cached) {
+      if (cached.isNotEmpty) {
+        return cached;
+      }
+      return service.getEmployees();
+    });
   }
 
   @override

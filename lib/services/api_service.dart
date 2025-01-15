@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:sprints_dio_task/models/employee.dart';
+import 'package:sprints_dio_task/services/shared_prefs.dart';
 
 class ApiService {
   final Dio _dio = Dio();
@@ -11,6 +12,7 @@ class ApiService {
       if (response.statusCode == 200) {
         final List<dynamic> data = response.data;
         final employees = data.map((json) => Employee.fromJson(json)).toList();
+        await AppPreferences.cacheEmployees(response.data);
         return employees;
       } else {
         throw Exception('Failed to load employees');

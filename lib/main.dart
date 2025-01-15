@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:sprints_dio_task/screens/home_screen.dart';
+import 'package:sprints_dio_task/services/shared_prefs.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await AppPreferences.init();
   runApp(const MyApp());
 }
 
