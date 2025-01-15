@@ -2,15 +2,20 @@
 
 A new Flutter project.
 
-## Getting Started
+## Overview
 
-This project is a starting point for a Flutter application.
+This project is a simple task for Fetch employee data using Dio and implement error handling using try-catch then parse JSON responses and map them to model then cache the employee list locally.
 
-A few resources to get you started if this is your first Flutter project:
+1. Fetch employee data using dio
+2. Implement proper error handling using try-catch.
+3. Navigate between two screens and pass data to the details page.
+4. Display a loading indicator while fetching data.
+5. Cache the employee list locally using shared_preferences and load it on app restart.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## 📸 Screens
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<div style="display: flex; gap: 10px;">
+    <img src="readme/home_1.jpg" alt="splash Screen" width="200">
+    <img src="readme/home_2.jpg"alt="home" width="200">
+    <img src="readme/home_3.jpg" alt="bottom sheet" width="200">
+</div>
