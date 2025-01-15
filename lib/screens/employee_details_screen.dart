@@ -10,7 +10,16 @@ class EmployeeDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(employee.name),
+        title: Hero(
+          tag: 'name-${employee.id}',
+          child: Material(
+            color: Colors.transparent,
+            child: Text(
+              employee.name,
+              style: const TextStyle(fontSize: 24),
+            ),
+          ),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -18,11 +27,14 @@ class EmployeeDetailsScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Center(
-              child: CircleAvatar(
-                radius: 40,
-                child: Text(
-                  employee.id.toString(),
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              child: Hero(
+                tag: 'avatar-${employee.id}',
+                child: CircleAvatar(
+                  radius: 40,
+                  child: Text(
+                    employee.id.toString(),
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
                 ),
               ),
             ),

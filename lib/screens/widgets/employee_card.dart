@@ -24,10 +24,22 @@ class EmployeeCard extends StatelessWidget {
       child: ListTile(
         titleTextStyle: TextStyle(color: Colors.white),
         subtitleTextStyle: TextStyle(color: Colors.white),
-        leading: CircleAvatar(
-          child: Text(employee.id.toString()),
+        leading: Hero(
+          tag: 'avatar-${employee.id}',
+          child: CircleAvatar(
+            child: Text(employee.id.toString()),
+          ),
         ),
-        title: Text(employee.name),
+        title: Hero(
+          tag: 'name-${employee.id}',
+          child: Material(
+            color: Colors.transparent,
+            child: Text(
+              employee.name,
+              style: const TextStyle(color: Colors.white),
+            ),
+          ),
+        ),
         subtitle: Text(employee.email),
         onTap: () {
           onTab(context);
