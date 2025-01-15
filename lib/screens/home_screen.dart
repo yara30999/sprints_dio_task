@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sprints_dio_task/models/employee.dart';
+import 'package:sprints_dio_task/screens/widgets/employee_card.dart';
 import 'package:sprints_dio_task/services/api_service.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -10,7 +11,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<Employee> employees = [];
+  late Future<List<Employee>> employees;
 
   final ApiService service = ApiService();
 
@@ -22,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> getEmployeeData() async {
     try {
-      final data = await service.getEmployees();
+      final Future<List<Employee>> data = service.getEmployees();
       setState(() {
         employees = data;
       });
@@ -35,11 +36,26 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Employees List')),
-      body: ListView.builder(
-        itemCount: employees.length,
-        itemBuilder: (context, index) {
-          final employee = employees[index];
-          return Text(employee.name);
+      body: FutureBuilder<List<Employee>>(
+        future: employees,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+                child: CircularProgressIndicator(
+              color: Colors.blueGrey,
+            ));
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else if (snapshot.hasData) {
+            return ListView.builder(
+              itemCount: snapshot.data!.length,
+              itemBuilder: (context, index) {
+                final employee = snapshot.data![index];
+                return EmployeeCard(employee: employee);
+              },
+            );
+          }
+          return Center(child: Text('No employees found.'));
         },
       ),
     );
